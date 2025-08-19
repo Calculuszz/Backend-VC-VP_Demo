@@ -13,7 +13,11 @@ app.include_router(wellknown.router, tags=["well-known"])
 app.include_router(verifier.router, prefix="/verifier", tags=["verifier"])
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],  # หรือใส่โดเมนโปรดักชัน
+    allow_origins=[
+        "http://localhost:3000",
+        "https://vc-vp-demo-production.up.railway.app",
+        "https://backend-vc-vpdemo-production.up.railway.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
