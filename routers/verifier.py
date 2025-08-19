@@ -4,7 +4,7 @@ from pydantic import BaseModel
 import requests
 from jose import jwt, jwk
 
-JWKS_URL = "http://127.0.0.1:8000/.well-known/jwks.json"  # เปลี่ยนเป็นโปรดักชันตอน deploy
+JWKS_URL = "https://backend-vc-vpdemo-production.up.railway.app/.well-known/jwks.json"  # เปลี่ยนเป็นโปรดักชันตอน deploy
 
 router = APIRouter()
 
