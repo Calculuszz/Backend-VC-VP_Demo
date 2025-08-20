@@ -8,9 +8,12 @@ app = FastAPI(
     description="MVP สำหรับออก JWT-VC + JWKS + revocation (simple)"
 )
 
+# รวม routers
 app.include_router(issuer.router, prefix="/issuer", tags=["issuer"])
 app.include_router(wellknown.router, tags=["well-known"])
 app.include_router(verifier.router, prefix="/verifier", tags=["verifier"])
+
+# การตั้งค่า CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -18,8 +21,8 @@ app.add_middleware(
         "https://backend-vc-vpdemo-production.up.railway.app",
     ],  # หรือใส่โดเมนโปรดักชัน
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],  # จำกัด methods ที่อนุญาต
+    allow_headers=["Content-Type", "Authorization"],  # จำกัด headers
 )
 
 @app.get("/")

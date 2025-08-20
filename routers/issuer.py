@@ -7,6 +7,7 @@ router = APIRouter()
 
 @router.post("/credentials", response_model=IssuedCredential)
 def issue_credential(req: IssueRequest):
+    # เรียกฟังก์ชันการออกเอกสาร
     vc_id, token = issue_vc(
         subject_id=req.subject_id,
         schema=req.schema,
@@ -18,14 +19,20 @@ def issue_credential(req: IssueRequest):
 
 @router.post("/credentials/revoke", response_model=RevocationStatus)
 def revoke(req: RevokeRequest):
+    # ยกเลิกเอกสารตาม credential_id
     ok = revoke_credential(req.credential_id, req.reason)
     if not ok:
         raise HTTPException(status_code=404, detail="Credential not found")
+    
+    # ตรวจสอบสถานะหลังการยกเลิก
     status = get_revocation_status(req.credential_id)
+    if not status:
+        raise HTTPException(status_code=404, detail="Credential not found")
     return status
 
 @router.get("/credentials/{credential_id}/status", response_model=RevocationStatus)
 def check_status(credential_id: str):
+    # ตรวจสอบสถานะของเอกสาร
     status = get_revocation_status(credential_id)
     if not status:
         raise HTTPException(status_code=404, detail="Credential not found")
