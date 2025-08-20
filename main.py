@@ -14,7 +14,7 @@ app.include_router(verifier.router, prefix="/verifier", tags=["verifier"])
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://vc-vp-demo-production.up.railway.app",
+        "https://vc-vpdemo-production.up.railway.app",
         "https://backend-vc-vpdemo-production.up.railway.app",
     ],  # หรือใส่โดเมนโปรดักชัน
     allow_credentials=True,
